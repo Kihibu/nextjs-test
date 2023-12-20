@@ -1,6 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import Script from "next/script"
 import { Inter } from 'next/font/google'
+import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +18,40 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <Script
+        id="analitics-script"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            <!-- Yandex.Metrika counter -->
+              (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+              (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+              ym(95946306, "init", {
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+              });
+            <!-- /Yandex.Metrika counter -->
+        `,
+        }}
+      />
+      <noscript>
+        <div>
+          <img
+            src="https://mc.yandex.ru/watch/95946306"
+            style={{ position: "absolute", left: "-9999px"}}
+            alt=""
+          />
+        </div>
+      </noscript>
+        {children}
+      </body>
     </html>
   )
 }
